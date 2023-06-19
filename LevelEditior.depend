@@ -1,0 +1,65 @@
+# depslib dependency file v1.0
+1687128732 source:/home/ryanlove/Desktop/ProjectI/LevelEditior/Editor.c
+	<allegro5/allegro.h>
+	<stdio.h>
+	<allegro5/allegro_color.h>
+	<allegro5/allegro_image.h>
+	<allegro5/allegro_native_dialog.h>
+	<allegro5/allegro_primitives.h>
+	"path.h"
+	"Editor.h"
+	"Appmenu.h"
+	"Platforms.h"
+	"mouse.h"
+
+1686676403 /home/ryanlove/Desktop/ProjectI/LevelEditior/path.h
+	"allegro5/allegro.h"
+
+1687117432 /home/ryanlove/Desktop/ProjectI/LevelEditior/Editor.h
+
+1687056809 /home/ryanlove/Desktop/ProjectI/LevelEditior/Appmenu.h
+
+1687052583 /home/ryanlove/Desktop/ProjectI/LevelEditior/mouse.h
+
+1687128481 source:/home/ryan/Desktop/ProjectI/LevelEditior/Editor.c
+	<allegro5/allegro.h>
+	<stdio.h>
+	<allegro5/allegro_color.h>
+	<allegro5/allegro_image.h>
+	<allegro5/allegro_native_dialog.h>
+	<allegro5/allegro_primitives.h>
+	"path.h"
+	"Editor.h"
+	"Appmenu.h"
+	"Platforms.h"
+	"mouse.h"
+
+1686676403 /home/ryan/Desktop/ProjectI/LevelEditior/path.h
+	"allegro5/allegro.h"
+
+1687117432 /home/ryan/Desktop/ProjectI/LevelEditior/Editor.h
+
+1687056809 /home/ryan/Desktop/ProjectI/LevelEditior/Appmenu.h
+
+1687052583 /home/ryan/Desktop/ProjectI/LevelEditior/mouse.h
+
+1687118893 /home/ryan/Desktop/ProjectI/LevelEditior/Platforms.h
+	<allegro5/allegro_image.h>
+	<allegro5/allegro.h>
+
+1687119124 source:/home/ryan/Desktop/ProjectI/LevelEditior/Platforms.c
+
+1687119124 /home/ryan/Desktop/ProjectI/LevelEditior/Platforms.c
+
+1687371497 source:/home/ryan/Desktop/ProjectI/LevelEditior/PlatformSelection.c
+	<allegro5/allegro5.h>
+	<allegro5/allegro_image.h>
+
+1687371497 source:/home/ryanlove/Desktop/ProjectI/LevelEditior/PlatformSelection.c
+	<allegro5/allegro5.h>
+	<allegro5/allegro_image.h>
+
+1687118893 /home/ryanlove/Desktop/ProjectI/LevelEditior/Platforms.h
+	<allegro5/allegro_image.h>
+	<allegro5/allegro.h>
+
