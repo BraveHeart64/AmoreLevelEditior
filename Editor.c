@@ -279,6 +279,7 @@ void MenuTabeState(){
         if(item != 0){
             platform.orgin_bmp = al_load_bitmap(item);
             platform.platforms = al_create_sub_bitmap(platform.orgin_bmp,platform.pos_x, platform.pos_y, platform.width, platform.height);
+           // platform.platforms = al_create_sub_bitmap(platform.orgin_bmp,50, 100, 50, 50);
         }
 
          appmenu.menutabestate = 1;
@@ -303,9 +304,31 @@ void MenuTabeState(){
 
         case 5: // changes the item to paint on screen
              if(platform.orgin_bmp != 0){// by 8 go down in y reset x once 36 rest to default value
-                    platform.orgin_bmp = al_load_bitmap(item);
-                    platform.platforms = al_create_sub_bitmap(platform.orgin_bmp,platform.pos_x, platform.pos_y, platform.width, platform.height);
+                  //  platform.orgin_bmp = al_load_bitmap(item);
+
+                   // platform.platforms = al_create_sub_bitmap(platform.orgin_bmp,0, 0, 50, 50);
                     appmenu.menutabestate = 0;
+                    platform.rowcounter++;
+
+                    if(platform.rowcounter >= 8){
+                        platform.pos_x = 0;
+                        platform.pos_y = platform.pos_y + 100;
+
+                        platform.endofrows = platform.endofrows + 1;
+                         platform.rowcounter = 0;
+
+                    }
+
+                    if(platform.endofrows >= 4){
+                        platform.pos_y = 0;
+                        platform.pos_x = 0;
+                        platform.rowcounter = 0;
+                        platform.endofrows  = 0;
+                        //platform.rowcounter == 0;
+                    }
+
+                     platform.platforms = al_create_sub_bitmap(platform.orgin_bmp,platform.pos_x, platform.pos_y, platform.width, platform.height);
+
             }
 
         break;
@@ -333,8 +356,8 @@ void InitAllAllegroValue(){
     platform.pos_y = 0;
     platform.width = 50;
     platform.height = 50;
-
-
+    platform.rowcounter = 0;
+    platform.endofrows = 0;
 
     SetPathGraphics();
     al_change_directory(thepath);

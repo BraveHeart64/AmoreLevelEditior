@@ -7,7 +7,9 @@ struct Platforms {
     int pos_x; //movese images right or left based on + or -
     int pos_y;  // moves images up or down based on + or -
     int width;
-    int height;;
+    int height;
+    int rowcounter;
+    int endofrows;
 
 
 
