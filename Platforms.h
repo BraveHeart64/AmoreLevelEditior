@@ -8,12 +8,15 @@ struct Platforms {
     int pos_y;  // moves images up or down based on + or -
     int width;
     int height;
+    int screen_x;
+    int screen_y;
     int rowcounter;
     int endofrows;
+    int landobject;
+    int land_object_created;
 
 
 
 };
  struct Platforms platform;
-
-
+//int gamelevel[50][50];

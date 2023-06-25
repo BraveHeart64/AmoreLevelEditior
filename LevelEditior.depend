@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1687217771 source:/home/ryanlove/Desktop/ProjectI/LevelEditior/Editor.c
+1687717207 source:/home/ryanlove/Desktop/ProjectI/LevelEditior/Editor.c
 	<allegro5/allegro.h>
 	<stdio.h>
 	<allegro5/allegro_color.h>
@@ -11,6 +11,7 @@
 	"Appmenu.h"
 	"Platforms.h"
 	"mouse.h"
+	"UserUpdateMap.h"
 
 1686676403 /home/ryanlove/Desktop/ProjectI/LevelEditior/path.h
 	"allegro5/allegro.h"
@@ -59,7 +60,13 @@
 	<allegro5/allegro5.h>
 	<allegro5/allegro_image.h>
 
-1687215798 /home/ryanlove/Desktop/ProjectI/LevelEditior/Platforms.h
+1687715721 /home/ryanlove/Desktop/ProjectI/LevelEditior/Platforms.h
 	<allegro5/allegro_image.h>
 	<allegro5/allegro.h>
+
+1687717973 /home/ryanlove/Desktop/ProjectI/LevelEditior/UserUpdateMap.h
+
+1687717549 source:/home/ryanlove/Desktop/ProjectI/LevelEditior/UserUpdateMap.c
+	"UserUpdateMap.h"
+	<stdio.h>
 

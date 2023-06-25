@@ -10,13 +10,17 @@
 #include "Appmenu.h"
 #include "Platforms.h"
 #include"mouse.h"
+#include"UserUpdateMap.h"
 
-void InitAllAllegroValue();
-void MenuTabeState();
-void MenuInterActions(int menustate);
-void MousePaint();
-char* SetPathGraphics();
-void DestroyBitmaps();
+void    InitAllAllegroValue();
+void    MenuTabeState();
+void    MenuInterActions(int menustate);
+void    MousePaint();
+char*   SetPathGraphics();
+void    LoadGameTest();
+void    DestroyBitmaps();
+void     RoundPositionX(int valx,int valy);
+
 
 
 struct AppMenu appmenu;
@@ -34,6 +38,58 @@ struct window{
     double fps;// = 60.0;
 
 }  surface;
+
+
+
+void RoundPositionX(int valx, int valy){
+    int rmx = valx % 50;
+    int rmy = valy % 50;
+
+    platform.screen_x = valx;
+    platform.screen_y = valy;
+
+    if(rmy < 50){
+        int counter = rmy;
+        while(counter > 0){
+            counter = counter - 1;
+                platform.screen_y = platform.screen_y - 1;
+
+
+        }
+    }
+    else if(rmy > 50){
+        int counter = rmy;
+        while(counter < 100){
+            counter = counter + 1;
+            platform.screen_y = platform.screen_y + 1;
+        }
+    }
+
+
+     if(rmx < 50){
+        int counter = rmx;
+        while(counter > 0){
+            counter = counter - 1;
+            platform.screen_x = platform.screen_x - 1;
+        }
+
+    }
+     else if(rmx > 50){
+        int counter = rmy;
+        while(counter < 100){
+            counter = counter + 1;
+            platform.screen_x = platform.screen_x + 1;
+        }
+    }
+
+    UserUpdateMap(platform.screen_x , platform.screen_y );
+
+
+
+}
+
+
+
 
 
 
@@ -70,7 +126,6 @@ int main(){
 
                if(t_was_pressed[ALLEGRO_KEY_T] && platform.orgin_bmp != 0){
                     t_was_pressed[ALLEGRO_KEY_T] = 0;
-                    printf("T");
                     platform.pos_x = RightImageInPlatform_x(platform.pos_x);
                     appmenu.menutabestate = 5;
                     MenuTabeState();
@@ -80,7 +135,7 @@ int main(){
                }
                 else if(escape_was_pressed[ALLEGRO_KEY_ESCAPE]){
                     escape_was_pressed[ALLEGRO_KEY_ESCAPE] = 1;
-                    printf("esc");
+
                     run  = 0;
                }
 
@@ -92,17 +147,20 @@ int main(){
                 mymouse.mouse_x = surface.event.mouse.x;
                 mymouse.mouse_y = surface.event.mouse.y;
 
+
+
+
+
             break;
 
             case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
                     mymouse.mouse_button = surface.event.mouse.button;
 
+
                    if( mymouse.mouse_x <=29 &&  mymouse.mouse_y <=30){
                             MenuTabeState();
 
-                          // al_show_native_file_dialog(0,file_chooser);
-                        //    thepath  = al_get_native_file_dialog_path(file_chooser, 0);
-                        //    char* item = thepath;
+
                    }
                    else if( mymouse.mouse_x <= 150 &&  mymouse.mouse_y <=100 && appmenu.activemenu == 1){
                     appmenu.menutabestate = 3; // new was pressed looad image to paint screen
@@ -131,6 +189,11 @@ int main(){
                         run = 0;
                    }
 
+                   if(item != 0){
+                        RoundPositionX(mymouse.mouse_x, mymouse.mouse_y);
+                   }
+                    // printf("%d  %d The x value:  The Y value: ", mymouse.mouse_x, mymouse.mouse_y);
+
 
             break;
 
@@ -152,6 +215,14 @@ int main(){
                 switch(surface.event.keyboard.keycode){
                     case ALLEGRO_KEY_T:
                         t_was_pressed[ALLEGRO_KEY_T] = 1;
+
+                         if(item != 0){
+                                platform.landobject++;
+                                landmass = platform.landobject;
+
+                        }
+
+
 
                     break;
                     case ALLEGRO_KEY_ESCAPE:
@@ -179,7 +250,9 @@ int main(){
                         t_was_pressed[ALLEGRO_KEY_T] = 0;
 
 
+
                     break;
+
                     case ALLEGRO_KEY_ESCAPE:
                         escape_was_pressed[ALLEGRO_KEY_ESCAPE] = 0;
 
@@ -207,14 +280,20 @@ int main(){
 
              if(platform.platforms !=0){ // keeps program from crashing if a plaform bitmaps has not been loaded
                 al_draw_bitmap(platform.platforms,620,90,0);//620
-            }
 
+
+            }
             //al_show_native_file_dialog(0,file_chooser);
-          //  thepath  = al_get_native_file_dialog_path(file_chooser, 0);
+           //thepath  = al_get_native_file_dialog_path(file_chooser, 0);
             //printf("c%", thepath);
+
             redraw = 0;
             al_flip_display();
 
+            if(platform.landobject >31){ // make a method for this
+                platform.landobject = 0;
+                landmass = platform.landobject;
+            }
 
         }
 
@@ -225,7 +304,6 @@ int main(){
     DestroyBitmaps();
     return 0;
 }
-
 
 
 char* SetPathGraphics(){
@@ -310,6 +388,7 @@ void MenuTabeState(){
                     appmenu.menutabestate = 0;
                     platform.rowcounter++;
 
+
                     if(platform.rowcounter >= 8){
                         platform.pos_x = 0;
                         platform.pos_y = platform.pos_y + 100;
@@ -358,6 +437,8 @@ void InitAllAllegroValue(){
     platform.height = 50;
     platform.rowcounter = 0;
     platform.endofrows = 0;
+    platform.landobject = 0;
+    platform.land_object_created = 0;
 
     SetPathGraphics();
     al_change_directory(thepath);
@@ -385,7 +466,9 @@ void InitAllAllegroValue(){
 
 
     file_chooser = al_create_native_file_dialog(path,"Load A Map","*.png;*.jpg;*.bmp",ALLEGRO_FILECHOOSER_FILE_MUST_EXIST);
+
 }
+
 
 
 void DestroyBitmaps(){
