@@ -3,7 +3,7 @@
 
 
 
-
+/*
 int gamelevel[10][60] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                          0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                          0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -21,6 +21,7 @@ int gamelevel[10][60] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
                          0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 
 };
+*/
 
 // we get segmentation error. A ground is generated without use clicking first go which is a major error
 
@@ -30,6 +31,19 @@ int gamelevel[10][60] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 //Method
 
 
+void InitGameMap(){
+
+    for(int i = 0; i<20; i++){
+        for(int c = 0; c<80; c++){
+
+        gamelevel[i][c] = 0;
+
+        }
+
+
+    }
+
+}
 
 
 void UserUpdateMap(int x , int y,struct Platforms p){
@@ -38,14 +52,14 @@ void UserUpdateMap(int x , int y,struct Platforms p){
 
     //printf("%d the Myposx value", mymouse.mouse_x);
 
-    for(int cols = 0; cols <15; ++cols){// cols = y
+    for(int cols = 0; cols <20; cols++){// cols = y
 
         myposy = myposy + 50;
         myposx = 0;
 
                 // draw to screen
 
-        for(rows = 0; rows <60; ++rows){// rows  = x
+        for(rows = 0; rows <80; rows++){// rows  = x
 
 
 
@@ -53,11 +67,24 @@ void UserUpdateMap(int x , int y,struct Platforms p){
                 printf("%s","Position to save in array end loop \t");
                 // add variable based on T
 
-               gamelevel[cols][rows] = 1;
-               rows = 60;
-               cols = 15;
+                    if(gamelevel[cols][rows]== 1){
 
-             break;
+                    }
+                    else if(gamelevel[cols][rows] == 0){
+                        gamelevel[cols][rows] = 1;
+                        printf("%d The X position \n", x);
+                        printf("%d myposx \t", myposx);
+
+                    }
+                    else{
+
+                        printf("%s", "Array is filled in this slot");
+                   }
+
+               //rows = 60;
+               //cols = 15;
+
+             //break;
             }
             myposx = myposx + 50;
 
@@ -67,8 +94,6 @@ void UserUpdateMap(int x , int y,struct Platforms p){
     }
 
 
-printf("%d The X position \n", x);
-printf("%d myposx \t", myposx);
 
 printf("%d The y position \n", y);
 printf("%d myposy \t", myposy);
@@ -89,11 +114,11 @@ printf("%d myposy \t", myposy);
 
 void RenderGameMap(int x , int y,struct Platforms p){
      //gamelevel[cols][rows];
-     int myposx = -50, myposy=-50;
+     int myposx = -50, myposy= -50;
 
     int rows = 0;
 
-    for(int cols = 0; cols <15; ++cols){// cols = y
+    for(int cols = 0; cols <20; cols++){// cols = y
 
         myposy = myposy + 50;
         myposx = 0;
@@ -101,15 +126,16 @@ void RenderGameMap(int x , int y,struct Platforms p){
 
                 // draw to screen
 
-        for(rows = 0; rows <60; ++rows){// rows  = x
+        for(rows = 0; rows <80; rows++){// rows  = x
 
             //gamelevel[cols][rows];
-            if(gamelevel[cols][rows] == 1){
+            if(gamelevel[cols][rows] == 1){ // the segmements most likely here
                 al_draw_bitmap(p.platforms,myposx,myposy,0);
 
-
             }
-            myposx = myposx+50;
+
+            myposx = myposx + 50;
+
         }
 
 

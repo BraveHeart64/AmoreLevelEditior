@@ -458,7 +458,7 @@ void InitAllAllegroValue(){
     platform.landobject = 0;
     platform.land_object_created = 0;
 
-
+    InitGameMap();
     SetPathGraphics();
     al_change_directory(thepath);
     icon = al_load_bitmap("Ic.png");
