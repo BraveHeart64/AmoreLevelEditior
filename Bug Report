@@ -1,0 +1,3 @@
+Very unstable level editor. We need to allocate memory to place a unique object down. We need to place safty code to stop the array of the level
+from going out of scope which may happen time to time.Last but not least the menu state has a new bug upon levaing the menu that could be the reason
+we get a random platform placement during your first click.
