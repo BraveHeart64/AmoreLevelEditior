@@ -19,4 +19,4 @@ struct Platforms {
 
 };
  struct Platforms platform;
-//int gamelevel[50][50];
+

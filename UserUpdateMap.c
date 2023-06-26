@@ -22,71 +22,98 @@ int gamelevel[10][60] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 
 };
 
+// we get segmentation error. A ground is generated without use clicking first go which is a major error
+
+
+// create a ground type to use from platform
+// Person* person = (Person*)malloc(sizeof(Person));
+//Method
 
 
 
 
-
-
-
-
-void UserUpdateMap(int x , int y){
-    int myposx = 0, myposy=0;
+void UserUpdateMap(int x , int y,struct Platforms p){
+    int myposx = -50, myposy= -50;
     int rows = 0;
 
     //printf("%d the Myposx value", mymouse.mouse_x);
 
     for(int cols = 0; cols <15; ++cols){// cols = y
-        //myposy = cols;
+
         myposy = myposy + 50;
+        myposx = 0;
 
                 // draw to screen
 
-        for(rows = 0; rows <50; ++rows){// rows  = x
-            //myposx = rows+50;
+        for(rows = 0; rows <60; ++rows){// rows  = x
 
-            if(myposx == x && myposy == y){
+
+
+            if(myposx == x && myposy == y ){// this if statment not setting it based on click
                 printf("%s","Position to save in array end loop \t");
                 // add variable based on T
 
-                gamelevel[cols][rows] = landmass;
+               gamelevel[cols][rows] = 1;
+               rows = 60;
+               cols = 15;
+
              break;
             }
-
-
-            if(myposx == x){
-
-            break;
-            }
-            else{
-
-                myposx = myposx + 50;
-            }
+            myposx = myposx + 50;
 
         }
 
 
     }
 
+
 printf("%d The X position \n", x);
+printf("%d myposx \t", myposx);
+
 printf("%d The y position \n", y);
-
-
-}
-
-
-
-
-void RenderGameMap(int x , int y){
-
-
-
-
-
-    //gamelevel[cols][rows]
-
-
-
-
+printf("%d myposy \t", myposy);
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+void RenderGameMap(int x , int y,struct Platforms p){
+     //gamelevel[cols][rows];
+     int myposx = -50, myposy=-50;
+
+    int rows = 0;
+
+    for(int cols = 0; cols <15; ++cols){// cols = y
+
+        myposy = myposy + 50;
+        myposx = 0;
+
+
+                // draw to screen
+
+        for(rows = 0; rows <60; ++rows){// rows  = x
+
+            //gamelevel[cols][rows];
+            if(gamelevel[cols][rows] == 1){
+                al_draw_bitmap(p.platforms,myposx,myposy,0);
+
+
+            }
+            myposx = myposx+50;
+        }
+
+
+
+    }
+}
+

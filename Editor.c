@@ -8,7 +8,7 @@
 #include "path.h"
 #include "Editor.h"
 #include "Appmenu.h"
-#include "Platforms.h"
+
 #include"mouse.h"
 #include"UserUpdateMap.h"
 
@@ -19,7 +19,7 @@ void    MousePaint();
 char*   SetPathGraphics();
 void    LoadGameTest();
 void    DestroyBitmaps();
-void     RoundPositionX(int valx,int valy);
+void    RoundPositionX(int valx,int valy);
 
 
 
@@ -36,6 +36,7 @@ struct window{
     ALLEGRO_TIMER* gc;
     double time_pt; //= 1.0;
     double fps;// = 60.0;
+    int menuactive;
 
 }  surface;
 
@@ -82,8 +83,8 @@ void RoundPositionX(int valx, int valy){
         }
     }
 
-    UserUpdateMap(platform.screen_x , platform.screen_y );
 
+   // RenderGameMap(platform.screen_x,platform.screen_y,platform);
 
 
 }
@@ -157,41 +158,52 @@ int main(){
                     mymouse.mouse_button = surface.event.mouse.button;
 
 
-                   if( mymouse.mouse_x <=29 &&  mymouse.mouse_y <=30){
-                            MenuTabeState();
+                if( mymouse.mouse_x <=29 &&  mymouse.mouse_y <=30){
+                    MenuTabeState();
+                    surface.menuactive = 1;
 
 
-                   }
-                   else if( mymouse.mouse_x <= 150 &&  mymouse.mouse_y <=100 && appmenu.activemenu == 1){
+                }
+                else if( mymouse.mouse_x <= 150 &&  mymouse.mouse_y <=100 && appmenu.activemenu == 1){
                     appmenu.menutabestate = 3; // new was pressed looad image to paint screen
                     MenuTabeState();
                     //appmenu.menutabestate = 1;
-
-                   }
-                   else if( mymouse.mouse_x <= 150 &&  mymouse.mouse_y <=150 && appmenu.activemenu == 1){
+                    surface.menuactive = 1;
+                }
+                else if( mymouse.mouse_x <= 150 &&  mymouse.mouse_y <=150 && appmenu.activemenu == 1){
                     appmenu.menutabestate = 2; // new was pressed looad image to paint screen
                     MenuTabeState();
                     //appmenu.menutabestate = 1;
+                    surface.menuactive = 1;
 
-                   }
-                   else if( mymouse.mouse_x <= 150 &&  mymouse.mouse_y <=250 && appmenu.activemenu == 1){
+                }
+                else if( mymouse.mouse_x <= 150 &&  mymouse.mouse_y <=250 && appmenu.activemenu == 1){
                     //appmenu.menutabestate = 2; // new was pressed looad image to paint screen
                    // MenuTabeState();
                     //appmenu.menutabestate = 1;
+                    surface.menuactive = 1;
 
-                   }
-                   else if(  mymouse.mouse_x >=174 ||  mymouse.mouse_y >= 300){ // mouse_y >=300 resets state menu no longer selected
+                }
+                else if(  mymouse.mouse_x >=174 ||  mymouse.mouse_y >= 300){ // mouse_y >=300 resets state menu no longer selected
                     appmenu.menutabestate = 0;
                     appmenu.activemenu = 0;
+                    surface.menuactive = 0;
 
-                   }
-                    else if(  mymouse.mouse_x <= 150 &&  mymouse.mouse_y >= 250 &&  mymouse.mouse_y <= 300 && appmenu.activemenu == 1){
-                        run = 0;
-                   }
+                }
+                else if(  mymouse.mouse_x <= 150 &&  mymouse.mouse_y >= 250 &&  mymouse.mouse_y <= 300 && appmenu.activemenu == 1){
+                    run = 0;
+                }
 
-                   if(item != 0){
-                        RoundPositionX(mymouse.mouse_x, mymouse.mouse_y);
-                   }
+                if(item != 0 && surface.menuactive == 0){
+                    RoundPositionX(mymouse.mouse_x, mymouse.mouse_y);
+                    UserUpdateMap(platform.screen_x , platform.screen_y,platform);
+
+
+                }
+
+
+
+
                     // printf("%d  %d The x value:  The Y value: ", mymouse.mouse_x, mymouse.mouse_y);
 
 
@@ -251,6 +263,8 @@ int main(){
 
 
 
+
+
                     break;
 
                     case ALLEGRO_KEY_ESCAPE:
@@ -279,13 +293,15 @@ int main(){
 
 
              if(platform.platforms !=0){ // keeps program from crashing if a plaform bitmaps has not been loaded
+
                 al_draw_bitmap(platform.platforms,620,90,0);//620
 
+                if(surface.menuactive == 0){
+                    RenderGameMap(platform.screen_x , platform.screen_y, platform);
+                }
 
             }
-            //al_show_native_file_dialog(0,file_chooser);
-           //thepath  = al_get_native_file_dialog_path(file_chooser, 0);
-            //printf("c%", thepath);
+
 
             redraw = 0;
             al_flip_display();
@@ -420,6 +436,7 @@ void MenuTabeState(){
 
 void InitAllAllegroValue(){
     al_init();
+
     al_init_primitives_addon();
     al_init_image_addon();
     al_install_mouse();
@@ -428,6 +445,7 @@ void InitAllAllegroValue(){
     al_init_native_dialog_addon();
     appmenu.menutabestate = 0;
     appmenu.activemenu = 0 ;
+    surface.menuactive = 0;
 
     platform.platforms = 0;
     platform.orgin_bmp = 0;
@@ -439,6 +457,7 @@ void InitAllAllegroValue(){
     platform.endofrows = 0;
     platform.landobject = 0;
     platform.land_object_created = 0;
+
 
     SetPathGraphics();
     al_change_directory(thepath);
